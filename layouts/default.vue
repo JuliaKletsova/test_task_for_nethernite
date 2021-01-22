@@ -1,11 +1,11 @@
 <template>
-  <v-app>
+   <v-app id="inspire">
     <v-data-table
-    :headers="headers"
-    :item="data"
-    :items-per-page="10"
-    class="elevation-1"
-  ></v-data-table>
+      :headers="headers"
+      :items="data"
+      :items-per-page="5"
+      class="elevation-1"
+    ></v-data-table>
   </v-app>
 </template>
 
@@ -13,17 +13,21 @@
 export default {
   data: () => ({
       headers: [
-            { text: 'hints', value: 'hints' },
+            { text: 'hits', value: 'hits' },
             { text: 'name', value: 'name' },
             { text: 'type', value: 'type' }
       ],
+      test: [
+        {hits: 'sld vksjnflvfb', name: 'fdvv', type: 'dfvkn'}
+      ],
       data: []      
   }),
+  methods: {
+  },
   mounted() {
     this.$axios.get("https://data.jsdelivr.com/v1/stats/packages").then(response => {
         for(let i=0;i<response.data.length;i++) {
           this.data.push(response.data[i])
-        console.log(this.data.length)
         }
         console.log(this.data)
     })
