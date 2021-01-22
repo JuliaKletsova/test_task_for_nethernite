@@ -1,24 +1,29 @@
 <template>
-   <v-app id="inspire">
-    <v-data-table
-      :headers="headers"
-      :items="data"
-      :items-per-page="5"
-      class="elevation-1"
-    ></v-data-table>
-  </v-app>
+    <v-app dark id="content"> 
+        <Header />
+            <v-data-table
+              :headers="headers"
+              :items="data"
+              :items-per-page="10"
+              class="elevation-1"
+            ></v-data-table>
+            
+        <Footer />
+    </v-app>
 </template>
 
 <script>
+import Footer from '@/components/Footer'
+
 export default {
+  components: {
+    Footer
+  },
   data: () => ({
       headers: [
             { text: 'hits', value: 'hits' },
             { text: 'name', value: 'name' },
             { text: 'type', value: 'type' }
-      ],
-      test: [
-        {hits: 'sld vksjnflvfb', name: 'fdvv', type: 'dfvkn'}
       ],
       data: []      
   }),
@@ -29,7 +34,6 @@ export default {
         for(let i=0;i<response.data.length;i++) {
           this.data.push(response.data[i])
         }
-        console.log(this.data)
     })
   }
 }
