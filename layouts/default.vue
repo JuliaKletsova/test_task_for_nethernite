@@ -1,20 +1,6 @@
 <template>
-    <v-app purple darken-4 id="content">
-        <header class="header">
-            <v-card>
-                <v-card-title>
-                    CDN Packages
-                    <v-spacer></v-spacer>
-                    <v-text-field
-                        v-model="search"
-                        append-icon="mdi-magnify"
-                        label="Search"
-                        single-line
-                        hide-details
-                    ></v-text-field>
-                </v-card-title>
-            </v-card>
-        </header>
+    <v-app purple darken-4 class="header">
+        <Header :filterList="filterList"/>
         <main class="main">
             <v-data-table
                 :headers="headers"
@@ -45,12 +31,13 @@
 </template>
 
 <script>
+import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Modal from '@/components/Modal'
 
 export default {
   components: {
-    Footer, 
+    Header, Footer, 
     'modal': Modal
   },
   data: () => ({
@@ -60,11 +47,19 @@ export default {
             { text: 'type', value: 'type' }
       ],
       data: [],
-      search: '',
+      fullData: [],
       info: [],
       currentPackage: null 
   }),
   methods: {
+    initPackages() {
+      this.$axios.get("https://data.jsdelivr.com/v1/stats/packages")
+               .then(response => {
+                    for(let i=0;i<response.data.length;i++) {
+                      this.data.push(response.data[i])
+                    }
+               }).catch(err => alert(err))
+    },
     getCurrentPackage(e) {
       this.currentPackage = e.toElement.innerText
       this.$axios.get(`http://registry.npmjs.com/-/v1/search?text=${e.toElement.innerText}`)
@@ -94,17 +89,25 @@ export default {
       },
       clearInfo() {
         this.info = []
+      },
+      filterList(searchText) {
+        console.log('filtering ....')
+        if(searchText.length) {
+          console.log('1111',this.fullData)
+          var test = function(_) {return new RegExp(searchText.split("").join(".*") + '.*').test(_.name)}
+          this.data = this.fullData.filter(test)
+        }
+        if(searchText === "") this.initPackages()
+      },
+      async setFullData() {
+        return await this.data
       }
 
   },
   mounted() {
-    this.$axios.get("https://data.jsdelivr.com/v1/stats/packages")
-               .then(response => {
-                    for(let i=0;i<response.data.length;i++) {
-                      this.data.push(response.data[i])
-                    }
-               }).catch(err => alert(err))
-    }
+    this.initPackages()
+    this.setFullData().then(response => {this.fullData = response})
+  }
 
 
 
