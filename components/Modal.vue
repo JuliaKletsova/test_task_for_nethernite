@@ -7,23 +7,40 @@
             <slot name="activator" v-bind="slotData"/>
         </template>
             <v-card>
-                <v-card-title @click="print">Пакет {{ currentPackage }}</v-card-title>
-                <v-data-table
-                    :headers="headers"
-                    :items="info"
-                    :items-per-page="10"
-                    class="elevation-1"
-                >
-                    <template v-slot:item="props">
-                        <tr>
-                            <td>{{ props.item.package.author.name }}</td>
-                            <td>{{ props.item.package.version}}</td>
-                            <td @click="print">{{ props.item.score.detail.popularity.toFixed(4) }}</td>
-                            <td>{{ props.item.description }}</td>
-                        </tr>
-                    </template>
-                </v-data-table>
+                <v-card-title>
+                    <v-spacer></v-spacer>
+                    {{ currentPackage }}
+                    <v-spacer></v-spacer>
+                </v-card-title>
+                <v-banner class="text-center" v-if="isLoading || info.length === 0" >
+                    Запрошенная Вами информация не может быть получена
+                </v-banner>
+                <template v-if="info.length !== 0">
+                        <v-simple-table
+                        fixed-header
+                        height="300px"
+                    >
+                        <template v-slot:default>
+                            <thead>
+                                <tr>
+                                <th></th>
+                                <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(item,i) in info"
+                                    :key="i"
+                                >
+                                    <td class="text-left">{{ item.name }}</td>
+                                    <td class="text-left">{{ item.value }}</td>
+                                </tr>
+                            </tbody>
+                        </template>                            
+                    </v-simple-table>
+                </template>
                 <v-card-actions>
+                    <v-spacer></v-spacer>
                     <v-btn @click="close">Close</v-btn>
                 </v-card-actions>
             </v-card>
@@ -32,7 +49,7 @@
 
 <script>
 export default {
-    props:['currentPackage', 'info'],
+    props:['currentPackage', 'info', 'clearInfo'],
     data: () => ({
         dialog: false,
         headers: [
@@ -41,19 +58,24 @@ export default {
             { text: 'popularity', value: 'popularity' },
             { text: 'description', value: 'description' }
         ],
-        //info: []
+        isLoading: true
     }),
     methods: {
         close() {
             this.dialog = false;
+            this.clearInfo()
         },
         print() {
-            console.log(this.info[0].package.author.name)
+            console.log(this.info)
         }
+    },
+    mounted() {
+        this.isLoading = false
     }
 }
 </script>
 
-<style>
+<style scoped lang="sass">
+    
 
 </style>

@@ -24,15 +24,18 @@
             >
               <template v-slot:item="props">
                 <tr>
-                  <td>{{ props.item.hits }}</td>
+                  <td data-tooltip="Нажмите на имя пакета">{{ props.item.hits }}</td>
                   <td>                    
-                    <modal :currentPackage="currentPackage" :info="info">
+                    <modal :currentPackage="currentPackage" 
+                           :info="info"
+                           :clearInfo="clearInfo"
+                    >
                       <template v-slot:activator="{ on }">
                         <div v-on="on"><p @click="getCurrentPackage">{{ props.item.name }}</p></div>
                       </template>
                     </modal>
                   </td>
-                  <td>{{ props.item.type }}</td>
+                  <td data-tooltip="Нажмите на имя пакета">{{ props.item.type }}</td>
                 </tr>
               </template> 
             </v-data-table>
@@ -66,9 +69,31 @@ export default {
       this.currentPackage = e.toElement.innerText
       this.$axios.get(`http://registry.npmjs.com/-/v1/search?text=${e.toElement.innerText}`)
                  .then(response => {
-                    response.data.objects.map(el => this.info.push(el))
+                    if (Array.isArray(response.data.objects) && response.data.objects.length > 0 ) {
+                      var obj = response.data.objects.sort((a,b)=> {
+                          parseInt(a.package.version.split(".").join(""))-parseInt(b.package.version.split(".").join(""))
+                      })[0]
+                      this.info.push({
+                        name: 'Version',
+                        value: obj.package.version || "0.0.0"
+                      },{
+                        name: 'Description',
+                        value: obj.package.descriprion || "None"
+                      },{
+                        name: 'Author',
+                        value: obj.package.author.name || "None"
+                      },{
+                        name: 'Author-email',
+                        value: obj.package.author.email || "None"
+                      },{
+                        name: 'Keywords',
+                        value: obj.package.keywords.join(", ") || "None"
+                      })
+                    }
                  })
-                 .catch(err => alert(err))
+      },
+      clearInfo() {
+        this.info = []
       }
 
   },
