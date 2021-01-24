@@ -16,8 +16,9 @@
                 >
                     <template v-slot:item="props">
                         <tr>
-                            <td>{{ props.item.package.author }}</td>
-                            <td @click="print()">{{ props.item }}</td>
+                            <td>{{ props.item.package.author.name }}</td>
+                            <td>{{ props.item.package.version}}</td>
+                            <td @click="print">{{ props.item.score.detail.popularity.toFixed(4) }}</td>
                             <td>{{ props.item.description }}</td>
                         </tr>
                     </template>
@@ -36,7 +37,8 @@ export default {
         dialog: false,
         headers: [
             { text: 'author', value: 'author' },
-            { text: 'publisher', value: 'publisher' },
+            { text: 'version', value: 'version' },
+            { text: 'popularity', value: 'popularity' },
             { text: 'description', value: 'description' }
         ],
         //info: []
@@ -45,8 +47,8 @@ export default {
         close() {
             this.dialog = false;
         },
-        print(e) {
-            console.log(e)
+        print() {
+            console.log(this.info[0].package.author.name)
         }
     }
 }
