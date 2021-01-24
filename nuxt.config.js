@@ -1,12 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-const routerBase = process.env.DEPLOY_ENV === "GH_PAGES" ? {
-  router: {
-    base: '/test_task_for_nethernite/'
-  }
-}:{}  
-
 export default {
-  ...routerBase,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - test_task_for_nethernite',
