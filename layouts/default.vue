@@ -1,7 +1,7 @@
 <template>
-    <v-app purple darken-4 class="header">
+    <v-app purple darken-4>
         <Header :filterList="filterList"/>
-        <main class="main">
+        <main>
             <v-data-table
                 :headers="headers"
                 :items="data"
@@ -37,7 +37,8 @@ import Modal from '@/components/Modal'
 
 export default {
   components: {
-    Header, Footer, 
+    Header, 
+    Footer, 
     'modal': Modal
   },
   data: () => ({
@@ -102,14 +103,10 @@ export default {
       async setFullData() {
         return await this.data
       }
-
   },
   mounted() {
     this.initPackages()
     this.setFullData().then(response => {this.fullData = response})
   }
-
-
-
 }
 </script>

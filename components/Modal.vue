@@ -10,7 +10,7 @@
                 <v-spacer></v-spacer>
             </v-card-title>
             <v-banner class="text-center" v-if="isLoading || info.length === 0" >
-                Запрошенная Вами информация не может быть получена
+                Запрошенная информация пока не найдена или не может быть получена
             </v-banner>
             <template v-if="info.length !== 0">
                     <v-simple-table
@@ -38,7 +38,7 @@
             </template>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn @click="close">Close</v-btn>
+                <v-btn @click="close">Закрыть</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

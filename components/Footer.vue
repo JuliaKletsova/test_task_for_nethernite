@@ -24,7 +24,6 @@ export default {
     data: () => ({
     })
 }
-//background:  #551A8B;;
 </script>
 
 <style scoped lang="sass">
@@ -33,7 +32,7 @@ export default {
         justify-content: space-around
 
     .info
-        width:400px
+        width: 400px
         display: flex
         justify-content: space-around
 

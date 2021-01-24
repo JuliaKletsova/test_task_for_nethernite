@@ -1,5 +1,5 @@
 <template>
-  <v-card >
+  <v-card>
         <v-card-title>
             CDN Packages
             <v-spacer></v-spacer>
@@ -28,7 +28,3 @@ export default {
     },
 }
 </script>
-
-<style>
-
-</style>
