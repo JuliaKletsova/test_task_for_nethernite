@@ -1,8 +1,9 @@
 # test_task_for_nethernite
 
-[Тестовое задание на вакансию Frontend-Developer](https://docs.google.com/document/d/1DxR5ZAflS9k5mCEGrQwynPT78TW2OSZTHcARBVTxRAQ/edit?usp=sharing)
+[Test task for the Frontend-Developer vacancy](https://docs.google.com/document/d/1DxR5ZAflS9k5mCEGrQwynPT78TW2OSZTHcARBVTxRAQ/edit?usp=sharing)
 
-Стек технологий, используемых для выполнения задания:
+Stack of technologies used to complete the task:
+
 * NuxtJs
 * Vuetify
 * Axios
