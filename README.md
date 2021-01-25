@@ -1,5 +1,18 @@
 # test_task_for_nethernite
 
+[Тестовое задание на вакансию Frontend-Developer](https://docs.google.com/document/d/1DxR5ZAflS9k5mCEGrQwynPT78TW2OSZTHcARBVTxRAQ/edit?usp=sharing)
+
+Стек технологий, используемых для выполнения задания:
+* NuxtJs
+* Vuetify
+* Axios
+* Sass
+* Javascript
+* Surge CDN
+
+You can try this application [here](http://test_task_for_nethernite.surge.sh/)
+
+
 ## Build Setup
 
 ```bash
